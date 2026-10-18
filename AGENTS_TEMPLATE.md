@@ -57,6 +57,15 @@ Do not install or select a compiler with ghcup.
 
 ## Package rules
 
+### CI and publication policy
+
+- Keep the inherited CI and publication workflows unchanged by default.
+- Do not replace publication on pushes to `main` with tag or release triggers. Preserve existing tag triggers where already configured.
+- Change workflows only for an explicit user request or a demonstrated project requirement, and explain why the change is necessary.
+- Publication setup does not justify unrelated CI changes.
+
+### Haskell rules
+
 - Edit `package.yaml`, not `project.cabal`, and commit both after `just generate`.
 - Keep GHC and bundled base library compatibility aligned with the package set in `flake.lock`.
 - Keep Hspec in the Nix GHC package environment aligned with `package.yaml` and `cabal.project.freeze`.
