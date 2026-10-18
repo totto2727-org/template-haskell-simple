@@ -50,6 +50,7 @@ Do not install or select a compiler with ghcup.
 - Use Hspec `describe`, `it`, and native expectations such as `shouldBe` for native tests.
 - Keep Docker or live-service tests outside default `test` and `ci` tasks.
 - Keep package and overlay outputs for CLI distribution.
+- Keep `package.nix` source inputs explicit with `lib.fileset`: select source directories as a whole and list required package files separately.
 - Keep Nix package validation separate from Just and normal CI.
 - Keep `fix` limited to automatic source changes and put read-only HLint checks in `check-hlint`.
 - Keep Nix formatting outside the Haskell task graph, using the direct commands above.

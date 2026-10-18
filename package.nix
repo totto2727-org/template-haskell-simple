@@ -1,15 +1,17 @@
 { haskellPackages, lib }:
 
 let
-  source = lib.cleanSourceWith {
-    src = lib.cleanSource ./.;
-    filter =
-      path: _type:
-      !(builtins.elem (baseNameOf path) [
-        "dist-newstyle"
-        ".direnv"
-        "tmp"
-      ]);
+  source = lib.fileset.toSource {
+    root = ./.;
+    fileset = lib.fileset.unions [
+      ./src
+      ./app
+      ./test
+      ./project.cabal
+      ./package.yaml
+      ./README.md
+      ./LICENSE
+    ];
   };
   package = haskellPackages.callCabal2nix "project" source { };
 in
