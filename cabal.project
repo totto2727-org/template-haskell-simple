@@ -1,0 +1,8 @@
+packages: .
+test-show-details: direct
+
+-- Keep dependency resolution behind the seven-day release-age window.
+index-state: 2026-10-10T00:00:00Z
+
+package project
+  ghc-options: -Werror

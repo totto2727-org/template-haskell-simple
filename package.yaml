@@ -1,0 +1,42 @@
+spec-version: 0.36.0
+name: project
+version: 0.1.0.0
+synopsis: A simple Haskell command-line application
+description: A small command-line application with a reusable greeting function.
+category: Tools
+author: username
+maintainer: username@example.com
+copyright: 2026 username
+license: MIT
+license-file: LICENSE
+github: username/project
+build-type: Simple
+verbatim:
+  cabal-version: '3.0'
+extra-source-files:
+  - README.md
+  - package.yaml
+
+language: Haskell2010
+ghc-options: -Wall -Wcompat
+dependencies:
+  - base >=4.18 && <5
+
+library:
+  source-dirs: src
+  exposed-modules: Project
+
+executables:
+  project:
+    main: Main.hs
+    source-dirs: app
+    ghc-options: -threaded -rtsopts
+    dependencies:
+      - project
+
+tests:
+  project-tests:
+    main: Spec.hs
+    source-dirs: test
+    dependencies:
+      - project
