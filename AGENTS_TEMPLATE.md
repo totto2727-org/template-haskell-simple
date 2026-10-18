@@ -28,14 +28,20 @@ Do not install or select a compiler with ghcup.
 | Command | Result |
 | --- | --- |
 | `just generate` | Generate the Cabal manifest from `package.yaml`. |
-| `just fix` | Format Haskell and Nix files and report HLint suggestions. |
+| `just fix` | Format Haskell source with Fourmolu. |
 | `just check` | Check manifest synchronization, package metadata, formatting, and lint findings without changing sources. |
+| `just check-hpack` | Compare hpack output with the committed manifest without changing it. |
+| `just check-cabal` | Validate Cabal package metadata. |
+| `just check-fourmolu` | Check Haskell formatting. |
+| `just check-hlint` | Report HLint suggestions. |
 | `just build` | Generate the manifest and build all components. |
 | `just test` | Generate the manifest, run Hspec tests, and check the starter CLI output. |
 | `just run` | Run the command from source. |
 | `just ci` | Check, build, and test without Nix package builds. |
 | `nix build .#project` | Build the installable Nix package separately. |
 | `nix run .` | Run the Nix package separately. |
+| `nixfmt flake.nix package.nix` | Format Nix files separately. |
+| `nixfmt --check flake.nix package.nix` | Check Nix formatting separately. |
 
 ## Architecture
 
@@ -45,6 +51,8 @@ Do not install or select a compiler with ghcup.
 - Keep Docker or live-service tests outside default `test` and `ci` tasks.
 - Keep package and overlay outputs for CLI distribution.
 - Keep Nix package validation separate from Just and normal CI.
+- Keep `fix` limited to automatic source changes and put read-only HLint checks in `check-hlint`.
+- Keep Nix formatting outside the Haskell task graph, using the direct commands above.
 
 ## Package rules
 

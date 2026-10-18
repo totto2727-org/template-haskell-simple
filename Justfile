@@ -9,21 +9,20 @@ generate:
 
 fix:
     fourmolu --mode inplace src app test
-    hlint src app test
-    nixfmt flake.nix package.nix
 
-check:
-    #!/usr/bin/env bash
-    set -euo pipefail
-    mkdir -p tmp
-    manifest=$(mktemp tmp/manifest.XXXXXX)
-    trap 'rm -f "$manifest"' EXIT
-    hpack --silent - > "$manifest"
-    diff -u project.cabal "$manifest"
+check: check-hpack check-cabal check-fourmolu check-hlint
+
+check-hpack:
+    hpack --silent - | diff -u project.cabal -
+
+check-cabal:
     cabal check
+
+check-fourmolu:
     fourmolu --mode check src app test
+
+check-hlint:
     hlint src app test
-    nixfmt --check flake.nix package.nix
 
 build: generate
     cabal build all

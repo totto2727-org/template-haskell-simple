@@ -62,6 +62,8 @@ mv AGENTS_TEMPLATE.md AGENTS.md
 ### 4. Validate
 
 Run `just generate` and `just ci` inside `nix develop`.
+`just fix` formats Haskell source, and `just check` aggregates independently selectable hpack, Cabal, Fourmolu, and HLint checks.
+Run `nixfmt --check flake.nix package.nix` separately when changing Nix files.
 Evaluate all supported development shells without building packages:
 
 ```bash
