@@ -1,7 +1,17 @@
 { haskellPackages, lib }:
 
 let
-  package = haskellPackages.callCabal2nix "project" (lib.cleanSource ./.) { };
+  source = lib.cleanSourceWith {
+    src = lib.cleanSource ./.;
+    filter =
+      path: _type:
+      !(builtins.elem (baseNameOf path) [
+        "dist-newstyle"
+        ".direnv"
+        "tmp"
+      ]);
+  };
+  package = haskellPackages.callCabal2nix "project" source { };
 in
 package.overrideAttrs (old: {
   meta = (old.meta or { }) // {
