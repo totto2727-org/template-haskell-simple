@@ -48,9 +48,13 @@ executable project
 test-suite project-tests
   type: exitcode-stdio-1.0
   main-is: Spec.hs
+  other-modules:
+      ProjectSpec
   hs-source-dirs:
       test
   ghc-options: -Wall -Wcompat
+  build-tool-depends:
+      hspec-discover:hspec-discover ==2.11.*
   build-depends:
       base >=4.18 && <5
     , hspec ==2.11.*

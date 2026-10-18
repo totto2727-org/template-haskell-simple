@@ -5,7 +5,8 @@
 ```text
 src/                Library modules
 app/Main.hs         Command entry point
-test/Spec.hs        Native Hspec tests
+test/Spec.hs        hspec-discover entry point
+test/ProjectSpec.hs Native Hspec specifications
 package.yaml        Maintained hpack package definition
 project.cabal       Generated Cabal manifest
 cabal.project       Build policy and Hackage index cutoff
@@ -22,6 +23,7 @@ Replace these paths with the initialized project's actual layout.
 ## Development commands
 
 Run commands from the repository root inside `nix develop`.
+Run `cabal update` on first use to prepare the Hackage index for Cabal build-tool resolution.
 Local development and CI use the same Nix inputs for GHC, cabal-install, hpack, Fourmolu, and HLint.
 Do not install or select a compiler with ghcup.
 
@@ -48,6 +50,7 @@ Do not install or select a compiler with ghcup.
 - Keep command I/O in `app/` and reusable pure logic in `src/`.
 - Test public behavior rather than implementation details.
 - Use Hspec `describe`, `it`, and native expectations such as `shouldBe` for native tests.
+- Keep `test/Spec.hs` limited to the discovery pragma; add test bodies in `*Spec.hs` modules that export `spec :: Spec`.
 - Keep Docker or live-service tests outside default `test` and `ci` tasks.
 - Keep package and overlay outputs for CLI distribution.
 - Keep `package.nix` source inputs explicit with `lib.fileset`: select source directories as a whole and list required package files separately.
