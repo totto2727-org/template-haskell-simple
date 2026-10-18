@@ -6,7 +6,8 @@
 | --- | --- |
 | `README.md`, `AGENTS.md` | Template entry point and initialization instructions. |
 | `README_TEMPLATE.md`, `AGENTS_TEMPLATE.md` | Documents to customize for the copied project. |
-| `src/Project.hs`, `app/Main.hs`, `test/Spec.hs` | Starter library, command, and Hspec tests. |
+| `src/Project.hs`, `app/Main.hs` | Starter library and command. |
+| `test/Spec.hs`, `test/ProjectSpec.hs` | Hspec discovery entry point and starter specifications. |
 | `package.yaml` | Maintained package definition for hpack. |
 | `project.cabal` | Generated Cabal manifest, committed for Cabal and Nix consumers. |
 | `cabal.project` | Local build policy and Hackage index cutoff. |
@@ -26,6 +27,7 @@
 Confirm the repository, Cabal package and command names, purpose, license, and publication targets.
 Do not invent registry ownership or credentials.
 Enter `nix develop` from the copied repository root before running project tasks.
+Run `cabal update` on first use so Cabal can resolve the `hspec-discover` build tool using the committed index cutoff and freeze file.
 Review `.envrc` before explicitly running `direnv allow`.
 Manage GHC, cabal-install, hpack, Fourmolu, and HLint in Nix only.
 Do not add ghcup, a separate GHC version pin, or a CI compiler matrix.
@@ -36,6 +38,7 @@ Replace `project` in `package.yaml`, `cabal.project`, `Justfile`, `package.nix`,
 Replace the `Project` module and its imports if the new project needs another name.
 Update `username/project`, author, maintainer, copyright, version, description, and license metadata.
 Replace the starter implementation and tests, including the CLI output assertion in `just test`.
+Keep `test/Spec.hs` limited to the `hspec-discover` pragma and place tests in separate `*Spec.hs` modules that export `spec :: Spec`.
 Keep `package.yaml` as the source of truth, run `just generate`, and remove the old Cabal manifest if the package name changed.
 Never edit the generated Cabal manifest directly.
 
