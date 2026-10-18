@@ -1,12 +1,12 @@
 module Main (main) where
 
-import Control.Monad (unless)
 import Project (greet)
-import System.Exit (die)
+import Test.Hspec (describe, hspec, it, shouldBe)
 
 main :: IO ()
-main = do
-    unless (greet "world" == "Hello, world!") $
-        die "greet must produce the starter command's greeting"
-    unless (greet "Haskell" == "Hello, Haskell!") $
-        die "greet must use the supplied name"
+main = hspec $
+    describe "greet" $ do
+        it "produces the starter command's greeting" $
+            greet "world" `shouldBe` "Hello, world!"
+        it "uses the supplied name" $
+            greet "Haskell" `shouldBe` "Hello, Haskell!"

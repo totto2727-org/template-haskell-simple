@@ -53,5 +53,6 @@ test-suite project-tests
   ghc-options: -Wall -Wcompat
   build-depends:
       base >=4.18 && <5
+    , hspec ==2.11.*
     , project
   default-language: Haskell2010

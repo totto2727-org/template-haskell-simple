@@ -5,10 +5,11 @@
 ```text
 src/                Library modules
 app/Main.hs         Command entry point
-test/Spec.hs        Native tests
+test/Spec.hs        Native Hspec tests
 package.yaml        Maintained hpack package definition
 project.cabal       Generated Cabal manifest
 cabal.project       Build policy and Hackage index cutoff
+cabal.project.freeze Locked Cabal dependencies
 Justfile            Development tasks
 flake.nix           Toolchain, package, and overlay outputs
 flake.lock          Pinned Nix inputs
@@ -30,7 +31,7 @@ Do not install or select a compiler with ghcup.
 | `just fix` | Format Haskell and Nix files and report HLint suggestions. |
 | `just check` | Check manifest synchronization, package metadata, formatting, and lint findings without changing sources. |
 | `just build` | Generate the manifest and build all components. |
-| `just test` | Generate the manifest, run native tests, and check the starter CLI output. |
+| `just test` | Generate the manifest, run Hspec tests, and check the starter CLI output. |
 | `just run` | Run the command from source. |
 | `just ci` | Check, build, and test without Nix package builds. |
 | `nix build .#project` | Build the installable Nix package separately. |
@@ -40,6 +41,7 @@ Do not install or select a compiler with ghcup.
 
 - Keep command I/O in `app/` and reusable pure logic in `src/`.
 - Test public behavior rather than implementation details.
+- Use Hspec `describe`, `it`, and native expectations such as `shouldBe` for native tests.
 - Keep Docker or live-service tests outside default `test` and `ci` tasks.
 - Keep package and overlay outputs for CLI distribution.
 - Keep Nix package validation separate from Just and normal CI.
@@ -48,6 +50,7 @@ Do not install or select a compiler with ghcup.
 
 - Edit `package.yaml`, not `project.cabal`, and commit both after `just generate`.
 - Keep GHC and bundled base library compatibility aligned with the package set in `flake.lock`.
+- Keep Hspec in the Nix GHC package environment aligned with `package.yaml` and `cabal.project.freeze`.
 - Update Nix tools through `flake.lock`, not a separate CI toolchain definition.
 - After adding external dependencies, use a Hackage `index-state` at least seven days old, run `cabal freeze --enable-tests`, and commit the freeze file.
 - Review dependency bounds instead of using `allow-newer` to bypass them.

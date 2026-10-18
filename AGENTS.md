@@ -6,10 +6,11 @@
 | --- | --- |
 | `README.md`, `AGENTS.md` | Template entry point and initialization instructions. |
 | `README_TEMPLATE.md`, `AGENTS_TEMPLATE.md` | Documents to customize for the copied project. |
-| `src/Project.hs`, `app/Main.hs`, `test/Spec.hs` | Starter library, command, and tests. |
+| `src/Project.hs`, `app/Main.hs`, `test/Spec.hs` | Starter library, command, and Hspec tests. |
 | `package.yaml` | Maintained package definition for hpack. |
 | `project.cabal` | Generated Cabal manifest, committed for Cabal and Nix consumers. |
 | `cabal.project` | Local build policy and Hackage index cutoff. |
+| `cabal.project.freeze` | Locked Cabal dependencies, including the Hspec test suite. |
 | `Justfile` | Generation, formatting, validation, build, and test tasks. |
 | `flake.nix`, `flake.lock` | Shared local and CI toolchain and pinned Nix inputs. |
 | `package.nix` | Installable CLI package, also exposed through an overlay. |
@@ -73,7 +74,8 @@ Run `nix flake check --no-build` after the package build to check host-system ou
 Keep Nix package builds outside `just ci` and normal CI.
 Run `nix flake update` only when updating Nix inputs, and commit `flake.lock` with the change.
 When adding Hackage dependencies, run `cabal update`, select an `index-state` at least seven days old, run `cabal freeze --enable-tests`, and commit `cabal.project.freeze` with the package definition.
-The base-only starter needs no Hackage freeze file because GHC and its bundled libraries are pinned by Nix.
+The Nix development shell provides Hspec with GHC from the same pinned package set.
+Keep the Cabal freeze file compatible with that package set when updating dependencies.
 Check links and remaining placeholders, then commit the initialized project.
 
 ## Optional publication

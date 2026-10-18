@@ -40,3 +40,4 @@ tests:
     source-dirs: test
     dependencies:
       - project
+      - hspec >=2.11 && <2.12

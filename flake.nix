@@ -45,7 +45,7 @@
         {
           default = pkgs.mkShell {
             packages = [
-              h.ghc
+              (h.ghcWithPackages (p: [ p.hspec ]))
               pkgs.cabal-install
               h.hpack
               h.fourmolu
