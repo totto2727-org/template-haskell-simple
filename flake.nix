@@ -53,6 +53,10 @@
               pkgs.just
               pkgs.nixfmt
             ];
+            shellHook = ''
+              # Enable Git Hook
+              vp config
+            '';
           };
         }
       );
