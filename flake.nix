@@ -42,7 +42,8 @@
           pkgs = mkPkgs system;
           h = pkgs.haskellPackages;
         in
-        {
+        rec {
+          ci = default.overrideAttrs (_: { shellHook = ""; });
           default = pkgs.mkShell {
             packages = [
               (h.ghcWithPackages (p: [ p.hspec ]))
