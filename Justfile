@@ -1,7 +1,9 @@
 set shell := ["bash", "-euo", "pipefail", "-c"]
 
+mod check 'check.just'
+
 default:
-    @just --list
+    @just --list --list-submodules
 
 # package.yaml is the source of truth. Commit the generated Cabal file.
 generate:
@@ -9,20 +11,6 @@ generate:
 
 fix:
     fourmolu --mode inplace src app test
-
-check: check-hpack check-cabal check-fourmolu check-hlint
-
-check-hpack:
-    hpack --silent - | diff -u project.cabal -
-
-check-cabal:
-    cabal check
-
-check-fourmolu:
-    fourmolu --mode check src app test
-
-check-hlint:
-    hlint src app test
 
 build: generate
     cabal build all
@@ -34,4 +22,4 @@ test: generate
 run: generate
     cabal run exe:project
 
-ci: check build test
+ci: check::all build test
